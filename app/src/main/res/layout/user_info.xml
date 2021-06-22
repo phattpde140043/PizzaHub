@@ -22,14 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/ID_attr"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="ID :"
-        app:layout_constraintEnd_toStartOf="@id/name_field"
+        app:layout_constraintEnd_toStartOf="@id/ID_field"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
 
@@ -41,29 +42,30 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Name :"
-        app:layout_constraintEnd_toStartOf="@id/name_field"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView11" />
+        app:layout_constraintTop_toBottomOf="@id/ID_attr" />
 
     <TextView
         android:id="@+id/ID_field"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ID_attr"
         app:layout_constraintTop_toBottomOf="@id/textView"
         tools:layout_constraintStart_toEndOf="@id/textView11" />
 
     <TextView
         android:id="@+id/name_field"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Name_attr"
         app:layout_constraintTop_toBottomOf="@id/ID_field"
         tools:layout_constraintStart_toEndOf="@id/textView4" />
 
@@ -80,7 +82,7 @@
 
     <TextView
         android:id="@+id/gender_field"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -123,8 +125,19 @@
         app:layout_constraintTop_toBottomOf="@id/Address_attr" />
 
     <TextView
+        android:id="@+id/email_attr"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Email :"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Phone_attr" />
+
+    <TextView
         android:id="@+id/DOB_field"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -135,7 +148,7 @@
 
     <TextView
         android:id="@+id/Address_field"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -145,14 +158,25 @@
         tools:layout_constraintStart_toEndOf="@id/textView9" />
 
     <TextView
-        android:id="@+id/Phoned"
-        android:layout_width="0dp"
+        android:id="@+id/Phoned_field"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Address_field"
+        tools:layout_constraintStart_toEndOf="@id/textView10" />
+
+    <TextView
+        android:id="@+id/phoned"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Phoned_field"
         tools:layout_constraintStart_toEndOf="@id/textView10" />
 
     <Button
@@ -167,7 +191,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="378dp" />
+        tools:layout_editor_absoluteY="411dp" />
 
     <Button
         android:id="@+id/Save_button"
@@ -181,7 +205,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="442dp" />
+        tools:layout_editor_absoluteY="472dp" />
 
     <Button
         android:id="@+id/Close_button"
@@ -195,7 +219,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="504dp" />
+        tools:layout_editor_absoluteY="530dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
