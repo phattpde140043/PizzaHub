@@ -10,16 +10,14 @@
         android:name="com.example.pizzahub.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.pizzahub.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.pizzahub.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="My Account"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
