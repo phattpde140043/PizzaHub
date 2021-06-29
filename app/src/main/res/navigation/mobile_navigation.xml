@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.pizzahub.ui.dashboard.DashboardFragment"
+        android:name="com.example.pizzahub.ui.cart.CartFragment"
         android:label="Cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
