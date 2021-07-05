@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="150dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/social_facebook_box_blue"-->
-<!--        />-->
-
 
     <TextView
         android:layout_width="match_parent"
@@ -22,23 +16,31 @@
         android:textColor="@color/main_red"
         android:text="PizzaHub" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/edt_login_username"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="Username"
-        android:textColorHint="@color/hint_gray"
-        />
-    <EditText
         android:id="@+id/edt_login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Password"
-        android:textColorHint="@color/hint_gray"
-        android:inputType = "textPassword"
-        />
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColorHint="@color/hint_gray"
+            android:inputType = "textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
