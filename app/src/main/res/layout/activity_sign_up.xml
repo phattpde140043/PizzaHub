@@ -1,101 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
     android:paddingTop="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:paddingRight="20dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="50dp"
-        android:gravity="center"
-        android:textColor="@color/main_red"
-        android:text="PizzaHub" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_signup_name"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:textColorHint="@color/hint_gray" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:gravity="center"
+            android:text="PizzaHub"
+            android:textColor="@color/main_red"
+            android:textSize="50dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_signup_mail"
-        android:layout_marginTop="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_signup_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mail" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_signup_username"
-        android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_signup_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_signup_password"
-        android:layout_marginTop="20dp"
-        app:passwordToggleEnabled="true">
+            android:layout_marginTop="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textColorHint="@color/hint_gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_signup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:textColorHint="@color/hint_gray"
-            android:inputType = "textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_signup_repassword"
-        android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            app:passwordToggleEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/hint_gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_signup_repassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Password Again"
-            android:textColorHint="@color/hint_gray"
-            android:inputType = "textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="20dp">
 
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/main_red"
-        android:text="SIGN UP"
-        />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Password Again"
+                android:inputType="textPassword"
+                android:textColorHint="@color/hint_gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/main_red"
+            android:text="SIGN UP" />
 
 
-    <TextView
-        android:id="@+id/tv_signup_backtologin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:textColor="@color/main_red"
-        android:text="Back to Login"/>
+        <TextView
+            android:id="@+id/tv_signup_backtologin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="Back to Login"
+            android:textColor="@color/main_red" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

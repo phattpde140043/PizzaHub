@@ -1,39 +1,100 @@
 package com.example.pizzahub;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    TextInputLayout edtSignupName, edtSignupMail, edtSignupUserName, edtSignupPassword, edtSignupRePassword;
+    TextInputLayout edtSignupName, edtSignupMail, edtSignupPassword, edtSignupRePassword;
     Button btnSignup;
     TextView tvBackToLogin;
+
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        mAuth = FirebaseAuth.getInstance();
+
         edtSignupName = findViewById(R.id.edt_signup_name);
         edtSignupMail = findViewById(R.id.edt_signup_mail);
-        edtSignupUserName = findViewById(R.id.edt_signup_username);
         edtSignupPassword = findViewById(R.id.edt_signup_password);
         edtSignupRePassword = findViewById(R.id.edt_signup_repassword);
         btnSignup = (Button) findViewById(R.id.btn_signup);
         tvBackToLogin = (TextView) findViewById(R.id.tv_signup_backtologin);
 
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validateName() | !validateEmail() | !validateUserName() | !validatePassword() | !validateRePassword()) {
+                if (!validateName() | !validateEmail() | !validatePassword() | !validateRePassword()) {
                     return;
+                } else {
+                    String password, name, email;
+                    password = edtSignupPassword.getEditText().getText().toString().trim();
+                    name = edtSignupName.getEditText().getText().toString().trim();
+                    email = edtSignupMail.getEditText().getText().toString().trim();
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    Log.e("break", "1");
+                    database = FirebaseDatabase.getInstance();
+                    reference = database.getReference("User").child(uid);
+                    ValueEventListener eventListener = new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                Log.e("break", "2");
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                                Log.e("break", "3");
+                                                if (task.isSuccessful()) {
+                                                    User u = new User(password, name, email);
+
+                                                    reference.setValue(u);
+                                                } else {
+                                                    edtSignupMail.setError("Email is exist!");
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    };
+                    reference.addListenerForSingleValueEvent(eventListener);
+
                 }
             }
         });
@@ -71,25 +132,6 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             edtSignupMail.setError(null);
             edtSignupMail.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    private boolean validateUserName() {
-        String val = edtSignupUserName.getEditText().getText().toString().trim();
-        String checkspaces = "/(\\s)/";
-        if (val.isEmpty()) {
-            edtSignupUserName.setError("Field can not be empty");
-            return false;
-        } else if (val.length() > 20) {
-            edtSignupUserName.setError("Username is too large!");
-            return false;
-        } else if (val.matches(checkspaces)) {
-            edtSignupUserName.setError("No White spaces are allowed!");
-            return false;
-        } else {
-            edtSignupUserName.setError(null);
-            edtSignupUserName.setErrorEnabled(false);
             return true;
         }
     }

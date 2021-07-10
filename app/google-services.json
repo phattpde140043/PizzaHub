@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252801160930",
+    "project_id": "pizzahub-d8796",
+    "storage_bucket": "pizzahub-d8796.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252801160930:android:e2f20ed334151f719db0bb",
+        "android_client_info": {
+          "package_name": "com.example.pizzahub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252801160930-004ur04n29on65g59l4m1h9uqbac8roi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWE1ik88-_P_s-Hr49-CWaN_rUwfr20Fk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252801160930-004ur04n29on65g59l4m1h9uqbac8roi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
