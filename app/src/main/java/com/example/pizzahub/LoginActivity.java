@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         if (pref.getString("token", null )!=null){
-            Log.d("STATE","token null");
+            Log.d("STATE","token:"+pref.getString("token", null ));
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

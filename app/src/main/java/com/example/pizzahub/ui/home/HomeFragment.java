@@ -20,13 +20,12 @@ import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.databinding.FragmentHomeBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-    Button logout;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,22 +35,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        logout=(Button) root.findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
 
-                SharedPreferences pref=getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor=pref.edit();
-                editor.clear();
-                editor.commit();
-
-                Intent i2 = new Intent(getContext(), LoginActivity.class);
-                startActivity(i2);
-                getActivity().finish();
-            }
-        });
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
