@@ -81,6 +81,12 @@ public class SignUpActivity extends AppCompatActivity {
                                                     User u = new User(password, name, email);
 
                                                     reference.setValue(u);
+
+                                                    Toast.makeText(getBaseContext(),"Sign up successfully!",Toast.LENGTH_LONG).show();
+
+                                                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
                                                 } else {
                                                     edtSignupMail.setError("Email is exist!");
                                                 }
