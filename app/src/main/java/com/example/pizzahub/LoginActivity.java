@@ -38,10 +38,29 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         if (pref.getString("token", null )!=null){
-            Log.d("STATE","token:"+pref.getString("token", null ));
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            String token= pref.getString("token", null );
+            Log.d("STATE","token: "+token);
+            String email =token.substring(6,token.indexOf("&password"));
+            String password= token.substring(token.indexOf("&password")+10,token.indexOf("&lastlogin"));
+            //Log.d("STATE","email: "+email);
+            //Log.d("STATE","password: "+password);
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("token", "email=" + email + "&password=" + password + "&lastlogin=" + Calendar.getInstance().getTime().toString() + "&.");
+                        editor.commit();
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Failed to login! Please check your email and password", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
 
         Button LoginButton = this.findViewById(R.id.btn_login);
