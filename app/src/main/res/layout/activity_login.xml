@@ -50,13 +50,6 @@
         android:text="LOG IN"
         />
 
-    <TextView
-        android:id="@+id/tv_login_forgot_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="Forgot Password?"
-        android:textColor="@color/main_red" />
 
     <TextView
         android:id="@+id/tv_login_signup"

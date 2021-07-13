@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences pref;
-    TextView SignupButton, ForgotPassword;
+    TextView SignupButton;
     TextInputLayout edtEmail, edtPassword;
 
     private FirebaseAuth mAuth;
@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         SignupButton = (TextView) findViewById(R.id.tv_login_signup);
         edtEmail = findViewById(R.id.edt_login_email);
         edtPassword = findViewById(R.id.edt_login_password);
-        ForgotPassword=findViewById(R.id.tv_login_forgot_pass);
 
         mAuth = FirebaseAuth.getInstance();
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -110,14 +109,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        ForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ResetPasswordActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     private boolean validatePassword() {
