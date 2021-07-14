@@ -4,13 +4,17 @@
     android:id="@+id/recyclerLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/rcImage"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:src="@drawable/ic_facebook"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toStartOf="@+id/rcName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,9 +48,10 @@
 
     <ImageView
         android:id="@+id/rcIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="6dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="4dp"
         android:src="@drawable/ic_addtocart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
