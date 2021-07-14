@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("abc ", "a");
+
                 for (DataSnapshot child : snapshot.getChildren()) {
                     String name = child.child("name").getValue().toString();
                     String price = child.child("price").getValue().toString();
