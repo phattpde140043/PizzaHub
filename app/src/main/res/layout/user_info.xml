@@ -209,7 +209,7 @@
         tools:layout_editor_absoluteY="472dp" />
 
     <Button
-        android:id="@+id/Close_button"
+        android:id="@+id/Logout_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

@@ -62,38 +62,30 @@ public class SignUpActivity extends AppCompatActivity {
                     password = edtSignupPassword.getEditText().getText().toString().trim();
                     name = edtSignupName.getEditText().getText().toString().trim();
                     email = edtSignupMail.getEditText().getText().toString().trim();
-                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    Log.e("break", "1");
-                    database = FirebaseDatabase.getInstance();
-                    reference = database.getReference("User").child(uid);
-                    ValueEventListener eventListener = new ValueEventListener() {
 
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.exists()) {
-                                Log.e("break", "2");
-                                mAuth.createUserWithEmailAndPassword(email, password)
-                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                                                Log.e("break", "3");
-                                                if (task.isSuccessful()) {
-                                                    User u = new User(password, name, email);
 
-                                                    reference.setValue(u);
-                                                } else {
-                                                    edtSignupMail.setError("Email is exist!");
-                                                }
-                                            }
-                                        });
-                            }
-                        }
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                    Log.e("break", "3");
+                                    if (task.isSuccessful()) {
+                                        User u = new User(password, name, email);
+                                        database = FirebaseDatabase.getInstance();
+                                        reference = database.getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        reference.setValue(u);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    };
-                    reference.addListenerForSingleValueEvent(eventListener);
+                                        Toast.makeText(getBaseContext(), "Sign up successfully!", Toast.LENGTH_LONG).show();
+
+                                        Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        edtSignupMail.setError("Email is exist!");
+                                    }
+                                }
+                            });
+
 
                 }
             }
