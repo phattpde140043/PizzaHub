@@ -1,70 +1,66 @@
 package com.example.pizzahub.ui.home;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pizzahub.LoginActivity;
-import com.example.pizzahub.MainActivity;
+import com.example.pizzahub.MyAdapter;
+import com.example.pizzahub.Pizza;
 import com.example.pizzahub.R;
-import com.example.pizzahub.databinding.FragmentHomeBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
-    Button logout;
+    private ArrayList<Pizza> pList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MyAdapter mAdapter;
+    View v;
+    DatabaseReference reference;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        v = inflater.inflate(R.layout.fragment_home, container, false);
+        recyclerView = v.findViewById(R.id.recyclerRow);
 
-        logout=(Button) root.findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
+        reference = FirebaseDatabase.getInstance().getReference("Pizza");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("abc ", "a");
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    String name = child.child("name").getValue().toString();
+                    String price = child.child("price").getValue().toString();
+                    String image = child.child("image").getValue().toString();
+                    Pizza p = new Pizza(name, image, Integer.parseInt(price));
+                    pList.add(p);
+                }
+            }
 
-                SharedPreferences pref=getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor=pref.edit();
-                editor.clear();
-                editor.commit();
-
-                Intent i2 = new Intent(getContext(), LoginActivity.class);
-                startActivity(i2);
-                getActivity().finish();
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-        return root;
-    }
+        mAdapter = new MyAdapter(getContext(), pList);
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return v;
     }
 }
+

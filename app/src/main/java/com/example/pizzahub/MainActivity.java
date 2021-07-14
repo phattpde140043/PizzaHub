@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.pizzahub.ui.home.HomeFragment;
+import com.example.pizzahub.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.pizzahub.databinding.ActivityMainBinding;
 
 import java.util.Calendar;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loadFragment(new HomeFragment());
+        //loadFragment(new HomeFragment());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
