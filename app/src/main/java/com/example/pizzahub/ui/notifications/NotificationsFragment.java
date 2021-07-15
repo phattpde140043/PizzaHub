@@ -19,8 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.databinding.FragmentNotificationsBinding;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class NotificationsFragment extends Fragment {
@@ -43,10 +41,11 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                GoogleSignIn.getClient(
-                        getContext(),
-                        new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-                ).signOut();
+
+                SharedPreferences pref=getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=pref.edit();
+                editor.clear();
+                editor.commit();
 
                 Intent i2 = new Intent(getContext(), LoginActivity.class);
                 startActivity(i2);

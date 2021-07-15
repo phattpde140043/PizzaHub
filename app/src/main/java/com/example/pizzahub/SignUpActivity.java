@@ -12,13 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    TextInputLayout edtSignupMail, edtSignupPassword, edtSignupRePassword;
+    TextInputLayout edtSignupName, edtSignupMail, edtSignupPassword, edtSignupRePassword;
     Button btnSignup;
     TextView tvBackToLogin;
 
@@ -45,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
+
+        edtSignupName = findViewById(R.id.edt_signup_name);
         edtSignupMail = findViewById(R.id.edt_signup_mail);
         edtSignupPassword = findViewById(R.id.edt_signup_password);
         edtSignupRePassword = findViewById(R.id.edt_signup_repassword);
@@ -55,11 +55,12 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( !validateEmail() | !validatePassword() | !validateRePassword()) {
+                if (!validateName() | !validateEmail() | !validatePassword() | !validateRePassword()) {
                     return;
                 } else {
-                    String password, email;
+                    String password, name, email;
                     password = edtSignupPassword.getEditText().getText().toString().trim();
+                    name = edtSignupName.getEditText().getText().toString().trim();
                     email = edtSignupMail.getEditText().getText().toString().trim();
 
 
@@ -67,10 +68,9 @@ public class SignUpActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                    Log.e("break", "3");
                                     if (task.isSuccessful()) {
-                                        edtSignupMail.setError(null);
-                                        edtSignupMail.setErrorEnabled(false);
-                                        User u = new User(email);
+                                        User u = new User(password, name, email);
                                         database = FirebaseDatabase.getInstance();
                                         reference = database.getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                         reference.setValue(u);
@@ -80,10 +80,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    } else {
                                         edtSignupMail.setError("Email is exist!");
-                                    }else {
-                                        Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
@@ -100,6 +98,18 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean validateName() {
+        String val = edtSignupName.getEditText().getText().toString().trim();
+        if (val.isEmpty()) {
+            edtSignupName.setError("Field can not be empty");
+            return false;
+        } else {
+            edtSignupName.setError(null);
+            edtSignupName.setErrorEnabled(false);
+            return true;
+        }
     }
 
     private boolean validateEmail() {

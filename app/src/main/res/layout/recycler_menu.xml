@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recyclerLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="10dp"
-    android:background="@color/white">
+    android:layout_margin="8dp"
+    android:padding="5dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="12dp">
 
-    <ImageView
-        android:id="@+id/rcImage"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        app:layout_constraintEnd_toStartOf="@+id/rcName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/rcName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="7dp"
-        android:text="Hello"
-        android:textColor="@color/main_red"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/rcImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:textAllCaps="true" />
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/rcPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Hello"
-        android:textColor="#000000"
-        app:layout_constraintStart_toEndOf="@+id/rcImage"
-        app:layout_constraintTop_toBottomOf="@+id/rcName" />
+        <ImageView
+            android:id="@+id/rcImage"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:src="@drawable/common_google_signin_btn_icon_dark"
+            android:scaleType="fitXY"/>
 
-    <ImageView
-        android:id="@+id/rcIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginRight="4dp"
-        android:src="@drawable/ic_addtocart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/rcName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Name of Drink"
+            android:textSize="21sp"
+            android:textColor="@color/main_red"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/rcPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:text="$1.0"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/rcIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_addtocart" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

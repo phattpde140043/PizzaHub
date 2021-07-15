@@ -2,6 +2,7 @@ package com.example.pizzahub;
 
 public class Pizza {
     String name, size, image;
+    String key;
     Integer price;
 
     public Pizza() {
@@ -18,6 +19,13 @@ public class Pizza {
         this.size = size;
         this.image = image;
         this.price = price;
+    }
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
     public String getName() {
         return name;
