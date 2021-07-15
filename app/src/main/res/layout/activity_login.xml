@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="150dp"
+    android:paddingTop="80dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
@@ -49,14 +49,37 @@
         android:backgroundTint="@color/main_red"
         android:text="LOG IN"
         />
+    <TextView
+        android:id="@+id/tv_login_forgot_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Forgot Password?"
+        android:textColor="@color/main_red" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:textSize="20dp"
+        android:text="OR"/>
+
+    <Button
+        android:id="@+id/btn_login_with_gg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
+        android:elevation="8dp"
+        android:text="Login with Google"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/tv_login_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="50dp"
+        android:paddingTop="20dp"
         android:textColor="@color/main_red"
         android:textSize="20dp"
         android:text="Sign Up"/>
