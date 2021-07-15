@@ -1,111 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="12dp"
+    android:padding="8dp"
+    android:layout_margin="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_myevent"
+    <LinearLayout
+        android:padding="16dp"
+        android:weightSum="5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardElevation="5dp"
-        card_view:cardUseCompatPadding="true"
-        android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:src="@drawable/common_google_signin_btn_icon_dark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="150dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="4"
+        android:weightSum="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="4"
             >
+<!--            <TextView-->
+<!--                android:id="@+id/txtName"-->
+<!--                android:text="Name"-->
+<!--                android:textSize="30sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_gravicity="start"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="wrap_content"/>-->
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                >
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        >
-                    <ImageView
-                        android:id="@+id/item_cart_img"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_minus"
-                        android:layout_weight="0.75"
-                        android:textSize="13dp"
-                        />
-                    <TextView
-                        android:id="@+id/item_cart_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Itemname"
-                        android:layout_weight="0.75"
-                        android:textSize="13dp"
-                        />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/item_cart_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Price"
-                        android:textAlignment="center"
-                        android:layout_weight="1"
-                        android:textSize="13dp"
-                        android:gravity="center_horizontal" />
-
-                    <TextView
-                        android:id="@+id/item_cart_quantity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Quantity"
-                        android:layout_toRightOf="@+id/item_cart_qty"
-                        android:textAlignment="center"
-                        android:textSize="13dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal" />
-                    <TextView
-                        android:id="@+id/item_cart_total"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Total"
-                        android:layout_toRightOf="@+id/item_cart_qty"
-                        android:textAlignment="center"
-                        android:textSize="13dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal" />
-                    <ImageView
-                        android:id="@+id/chk_selectitem"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_weight="1.15"
-                        android:src="@drawable/ic_x"
-                        android:clickable="false"
-                        />
-
-
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/btnMinus"
+                    android:src="@drawable/ic_baseline_indeterminate_check_box_24"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txtQuantity"
+                    android:text="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="bottom"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/btnPlus"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_baseline_add_box_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/txtPrice"
+                android:text="$1"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
