@@ -5,63 +5,123 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pizzahub.MyAdapter;
-import com.example.pizzahub.Pizza;
+
+import com.example.pizzahub.adapter.MyPizzaAdapter;
+import com.example.pizzahub.listener.ICartLoadListener;
+import com.example.pizzahub.listener.IPizzaLoadListener;
+import com.example.pizzahub.model.CartModel;
+import com.example.pizzahub.model.Pizza;
 import com.example.pizzahub.R;
 
+import com.example.pizzahub.utils.SpaceItemDecoration;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class HomeFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private ArrayList<Pizza> pList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private MyAdapter mAdapter;
+public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartLoadListener {
+
+    @BindView(R.id.recycler_pizza)
+    RecyclerView recyclerPizza;
+    @BindView(R.id.mainLayout)
+    LinearLayout mainLayout;
+    @BindView(R.id.badge)
+    NotificationBadge badge;
+    @BindView(R.id.btnCart)
+    FrameLayout btnCart;
+
+    IPizzaLoadListener pizzaLoadListener;
+    ICartLoadListener cartLoadListener;
     View v;
-    DatabaseReference reference;
 
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = v.findViewById(R.id.recyclerRow);
 
-        reference = FirebaseDatabase.getInstance().getReference("Pizza");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("abc ", "a");
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    String name = child.child("name").getValue().toString();
-                    String price = child.child("price").getValue().toString();
-                    String image = child.child("image").getValue().toString();
-                    Pizza p = new Pizza(name, image, Integer.parseInt(price));
-                    pList.add(p);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
-        });
-        mAdapter = new MyAdapter(getContext(), pList);
-
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        return v;
+        init();
+        loadDrinkFromFirebase();
     }
+
+    private void loadDrinkFromFirebase() {
+        List<Pizza> pizzas = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference("Pizza")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if(snapshot.exists())
+                        {
+                            for(DataSnapshot pizzaSnapshot:snapshot.getChildren())
+                            {
+                                Pizza pizza = pizzaSnapshot.getValue(Pizza.class);
+                                pizza.setKey(pizzaSnapshot.getKey());
+                                pizzas.add(pizza);
+                            }
+                            pizzaLoadListener.onPizzaLoadSuccess(pizzas);
+                        }
+                        else
+                            pizzaLoadListener.onPizzaLoadFailed("Can't find Pizza");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        pizzaLoadListener.onPizzaLoadFailed(error.getMessage());
+                    }
+                });
+    }
+
+    public void init(){
+        ButterKnife.bind(this);
+
+        pizzaLoadListener = this;
+        cartLoadListener = this;
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerPizza.setLayoutManager(gridLayoutManager);
+        recyclerPizza.addItemDecoration(new SpaceItemDecoration());
+    }
+    @Override
+    public void onPizzaLoadSuccess(List<Pizza> pizzaList) {
+        MyPizzaAdapter adapter = new MyPizzaAdapter(this, pizzaList);
+        recyclerPizza.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPizzaLoadFailed(String message) {
+        Snackbar.make(mainLayout,message,Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onCartLoadSuccess(List<CartModel> cartModelList) {
+
+    }
+
+    @Override
+    public void onCartLoadFailed(String message) {
+
+    }
+
 }
 

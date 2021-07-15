@@ -1,11 +1,13 @@
-package com.example.pizzahub;
+package com.example.pizzahub.model;
 
 public class Pizza {
-    String name, size, image;
+    String key, name, size, image;
     Integer price;
 
     public Pizza() {
     }
+
+
 
     public Pizza(String name, String size, String image, Integer price) {
         this.name = name;
@@ -18,6 +20,13 @@ public class Pizza {
         this.size = size;
         this.image = image;
         this.price = price;
+    }
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
     public String getName() {
         return name;

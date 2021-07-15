@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/mainLayout"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F6F4ED">
@@ -41,7 +42,27 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <FrameLayout
+            android:id="@+id/btnCart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/cartButton"
+                android:src="@drawable/ic_baseline_shopping_cart_24"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                />
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/badge"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"></com.nex3z.notificationbadge.NotificationBadge>
 
+
+        </FrameLayout>
         <EditText
             android:id="@+id/etSearch"
             android:layout_width="wrap_content"
@@ -58,7 +79,7 @@
             android:textSize="14sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRow"
+            android:id="@+id/recycler_pizza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
