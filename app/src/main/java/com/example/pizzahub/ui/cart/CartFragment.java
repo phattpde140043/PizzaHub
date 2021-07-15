@@ -6,37 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.pizzahub.R;
 import com.example.pizzahub.databinding.FragmentCartBinding;
 
 public class CartFragment extends Fragment {
 
-    private CartViewModel cartViewModel;
-    private FragmentCartBinding binding;
-
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        cartViewModel =
-                new ViewModelProvider(this).get(CartViewModel.class);
-
-        binding = FragmentCartBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-//        final TextView textView = binding.textDashboard;
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-        return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        return view;
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.adapter.MyPizzaAdapter;
 import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.listener.IPizzaLoadListener;
@@ -54,15 +55,19 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     IPizzaLoadListener pizzaLoadListener;
     ICartLoadListener cartLoadListener;
     View v;
+    private MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_home, container, false);
+        mainActivity = (MainActivity)getActivity();
 
         init();
         loadDrinkFromFirebase();
+
+        return v;
     }
 
     private void loadDrinkFromFirebase() {
@@ -93,18 +98,18 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     }
 
     public void init(){
-        ButterKnife.bind(this);
+        ButterKnife.bind(v);
 
         pizzaLoadListener = this;
         cartLoadListener = this;
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mainActivity, 2);
         recyclerPizza.setLayoutManager(gridLayoutManager);
         recyclerPizza.addItemDecoration(new SpaceItemDecoration());
     }
     @Override
     public void onPizzaLoadSuccess(List<Pizza> pizzaList) {
-        MyPizzaAdapter adapter = new MyPizzaAdapter(this, pizzaList);
+        MyPizzaAdapter adapter = new MyPizzaAdapter(mainActivity, pizzaList);
         recyclerPizza.setAdapter(adapter);
     }
 
@@ -124,4 +129,3 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     }
 
 }
-

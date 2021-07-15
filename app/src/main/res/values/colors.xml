@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_red">#B80A0A</color>
     <color name="hint_gray">#999999</color>
+    <color name="color_tab_1">#F44336</color>
+    <color name="color_tab_2">#3F51B5</color>
+    <color name="color_tab_3">#4CAF50</color>
 </resources>
