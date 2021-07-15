@@ -35,7 +35,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         v = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = v.findViewById(R.id.recyclerRow);
 
@@ -43,7 +42,6 @@ public class HomeFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("abc ", "a");
                 for (DataSnapshot child : snapshot.getChildren()) {
                     String name = child.child("name").getValue().toString();
                     String price = child.child("price").getValue().toString();
@@ -52,13 +50,11 @@ public class HomeFragment extends Fragment {
                     pList.add(p);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
         mAdapter = new MyAdapter(getContext(), pList);
-
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return v;
