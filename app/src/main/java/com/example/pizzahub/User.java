@@ -1,15 +1,7 @@
 package com.example.pizzahub;
 
 public class User {
-    String  password, name, email;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    String  name, email;
 
     public String getName() {
         return name;
@@ -27,9 +19,7 @@ public class User {
         this.email = email;
     }
 
-    public User(String password, String name, String email) {
-        this.password = password;
-        this.name = name;
+    public User(String email) {
         this.email = email;
     }
 
