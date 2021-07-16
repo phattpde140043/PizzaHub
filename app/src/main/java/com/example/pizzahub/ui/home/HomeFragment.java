@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.adapter.MyPizzaAdapter;
+import com.example.pizzahub.eventbus.MyUpdataCartEvent;
 import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.listener.IPizzaLoadListener;
 import com.example.pizzahub.model.CartModel;
@@ -33,6 +34,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nex3z.notificationbadge.NotificationBadge;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -57,6 +61,26 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     View v;
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        if(EventBus.getDefault().hasSubscriberForEvent(MyUpdataCartEvent.class))
+            EventBus.getDefault().removeStickyEvent(MyUpdataCartEvent.class);
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onUpdateCart(MyUpdataCartEvent event)
+    {
+        countCartItem();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +88,7 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
 
         init();
         loadDrinkFromFirebase();
+        countCartItem();
 
         return v;
     }
@@ -107,7 +132,7 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     }
     @Override
     public void onPizzaLoadSuccess(List<Pizza> pizzaList) {
-        MyPizzaAdapter adapter = new MyPizzaAdapter(getContext(),pizzaList);
+        MyPizzaAdapter adapter = new MyPizzaAdapter(getContext(),pizzaList,cartLoadListener);
         recyclerPizza.setAdapter(adapter);
     }
 
@@ -118,12 +143,44 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
 
     @Override
     public void onCartLoadSuccess(List<CartModel> cartModelList) {
-
+        int cartSum = 0;
+        for(CartModel cartModel: cartModelList)
+            cartSum += cartModel.getQuantity();
+        badge.setNumber(cartSum);
     }
 
     @Override
     public void onCartLoadFailed(String message) {
-
+        Snackbar.make(mainLayout,message,Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        countCartItem();
+    }
+
+    private void countCartItem() {
+        List<CartModel> cartModels = new ArrayList<>();
+        FirebaseDatabase
+                .getInstance().getReference("Cart")
+                .child("UserId")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for(DataSnapshot cartSnapshot:snapshot.getChildren())
+                        {
+                            CartModel cartModel = cartSnapshot.getValue(CartModel.class);
+                            cartModel.setKey(cartSnapshot.getKey());
+                            cartModels.add(cartModel);
+                        }
+                        cartLoadListener.onCartLoadSuccess(cartModels);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        cartLoadListener.onCartLoadFailed(error.getMessage());
+                    }
+                });
+    }
 }
