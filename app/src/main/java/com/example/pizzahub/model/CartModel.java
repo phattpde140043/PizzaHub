@@ -1,25 +1,13 @@
-package com.example.pizzahub;
+package com.example.pizzahub.model;
 
-public class Pizza {
-    String name, size, image;
-    String key;
-    Integer price;
+public class CartModel {
+    private String key, name, size, image, price;
+    private int quantity;
+    private float totalPrice;
 
-    public Pizza() {
+    public CartModel() {
     }
 
-    public Pizza(String name, String size, String image, Integer price) {
-        this.name = name;
-        this.size = size;
-        this.image = image;
-        this.price = price;
-    }
-    public Pizza(String name, String image, Integer price) {
-        this.name = name;
-        this.size = size;
-        this.image = image;
-        this.price = price;
-    }
     public String getKey() {
         return key;
     }
@@ -27,6 +15,7 @@ public class Pizza {
     public void setKey(String key) {
         this.key = key;
     }
+
     public String getName() {
         return name;
     }
@@ -51,11 +40,27 @@ public class Pizza {
         this.image = image;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
