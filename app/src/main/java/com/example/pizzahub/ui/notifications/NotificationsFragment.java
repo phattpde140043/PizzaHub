@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,13 +23,28 @@ import com.example.pizzahub.databinding.FragmentNotificationsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
     private FragmentNotificationsBinding binding;
     Button logout;
+    DatabaseReference mData;
 
+    TextView ID_field;
+    TextView Name_field;
+    TextView Gender_field;
+    TextView DOB_field;
+    TextView Address_field;
+    TextView Phone_field;
+    TextView Email_field;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +67,33 @@ public class NotificationsFragment extends Fragment {
                 Intent i2 = new Intent(getContext(), LoginActivity.class);
                 startActivity(i2);
                 getActivity().finish();
+            }
+        });
+
+        ID_field = (TextView) root.findViewById(R.id.ID_field);
+        Name_field= (TextView) root.findViewById(R.id.name_field);
+        Gender_field = (TextView) root.findViewById(R.id.gender_field);
+        DOB_field = (TextView) root.findViewById(R.id.DOB_field);
+        Address_field = (TextView) root.findViewById(R.id.Address_field);
+        Phone_field = (TextView) root.findViewById(R.id.Phoned_field);
+        Email_field = (TextView) root.findViewById(R.id.Email_field);
+
+        mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("User").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                ID_field.setText(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Name_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString());
+                Gender_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Gender").getValue().toString());
+                DOB_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("DOB").getValue().toString());
+                Address_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Address").getValue().toString());
+                Email_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString());
+                Phone_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Phone").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
             }
         });
 
