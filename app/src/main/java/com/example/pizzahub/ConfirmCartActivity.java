@@ -72,7 +72,7 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.confirm_cart);
+        setContentView(R.layout.activity_confirm_order);
 
         btnCheckOut = findViewById(R.id.btn_check_out);
         edtName=findViewById(R.id.confirm_name);
