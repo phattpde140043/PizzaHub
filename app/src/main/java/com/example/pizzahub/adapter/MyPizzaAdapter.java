@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,7 +67,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
         holder.txtPrice.setText(new StringBuilder("$").append(pizzaList.get(position).getPrice()));
         holder.txtName.setText(new StringBuilder().append(pizzaList.get(position).getName()));
 
-        holder.setListener((view, adapterPosition) -> {
+        holder.btnAddToCart.setOnClickListener(v -> {
             addToCart(pizzaList.get(position));
         });
     }
@@ -140,6 +141,8 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
         TextView txtName;
         @BindView(R.id.txtPrice)
         TextView txtPrice;
+        @BindView(R.id.img_add_to_cart)
+        ImageView btnAddToCart;
 
         IRecyclerViewClickListener listener;
 
@@ -151,7 +154,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
         public MyPizzaViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             unbinder = ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         @Override
