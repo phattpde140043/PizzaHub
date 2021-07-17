@@ -82,13 +82,46 @@ public class NotificationsFragment extends Fragment {
         mData.child("User").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                ID_field.setText(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                Name_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString());
-                Gender_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Gender").getValue().toString());
-                DOB_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("DOB").getValue().toString());
-                Address_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Address").getValue().toString());
-                Email_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString());
-                Phone_field.setText(snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Phone").getValue().toString());
+                String ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                ID_field.setText(ID);
+
+                if(snapshot.child(ID).child("name").getValue()==null){
+                    mData.child("User").child(ID).child("name").setValue("");
+                    Name_field.setText("");
+                }else{
+                    Name_field.setText(snapshot.child(ID).child("name").getValue().toString());
+                }
+
+                if(snapshot.child(ID).child("Gender").getValue()==null){
+                    mData.child("User").child(ID).child("Gender").setValue("");
+                    Gender_field.setText("");
+                }else{
+                    Gender_field.setText(snapshot.child(ID).child("Gender").getValue().toString());
+                }
+
+                if(snapshot.child(ID).child("DOB").getValue()==null){
+                    mData.child("User").child(ID).child("DOB").setValue("");
+                    DOB_field.setText("");
+                }else{
+                    DOB_field.setText(snapshot.child(ID).child("DOB").getValue().toString());
+                }
+
+                if(snapshot.child(ID).child("Address").getValue()==null){
+                    mData.child("User").child(ID).child("Address").setValue("");
+                    Address_field.setText("");
+                }else{
+                    Address_field.setText(snapshot.child(ID).child("Address").getValue().toString());
+                }
+
+                Email_field.setText(snapshot.child(ID).child("email").getValue().toString());
+
+                if(snapshot.child(ID).child("Phone").getValue()==null){
+                    mData.child("User").child(ID).child("Phone").setValue("");
+                    Phone_field.setText("");
+                }else{
+                    Phone_field.setText(snapshot.child(ID).child("Phone").getValue().toString());
+                }
+
             }
 
             @Override
