@@ -91,13 +91,6 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                 Intent intent = new Intent(getContext(), ConfirmCartActivity.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-//                finish();
-//                Fragment fragment = new ConfirmCartActivity();
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
             }
         });
 
