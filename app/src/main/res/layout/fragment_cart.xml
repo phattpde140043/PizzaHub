@@ -3,6 +3,7 @@
 <RelativeLayout android:background="#e1e1e1"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
+    android:id="@+id/mainLayout_cart"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -17,6 +18,7 @@
     </TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_cart"
+        android:padding="8dp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_above="@+id/layout_total"
@@ -41,11 +43,11 @@
             android:textSize="20dp"></TextView>
 
         <TextView
-            android:id="@+id/tv_total"
+            android:id="@+id/txtTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0 Rs"
+            android:text=""
             android:textSize="20dp"></TextView>
 
     </LinearLayout>

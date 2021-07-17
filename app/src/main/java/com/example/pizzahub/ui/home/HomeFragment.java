@@ -1,16 +1,20 @@
 package com.example.pizzahub.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +29,13 @@ import com.example.pizzahub.model.CartModel;
 import com.example.pizzahub.model.Pizza;
 import com.example.pizzahub.R;
 
+import com.example.pizzahub.ui.cart.CartFragment;
+import com.example.pizzahub.ui.notifications.NotificationsFragment;
 import com.example.pizzahub.utils.SpaceItemDecoration;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,6 +68,7 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     IPizzaLoadListener pizzaLoadListener;
     ICartLoadListener cartLoadListener;
     View v;
+
 
     @Override
     public void onStart() {
@@ -126,9 +136,25 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
         pizzaLoadListener = this;
         cartLoadListener = this;
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerPizza.setLayoutManager(gridLayoutManager);
         recyclerPizza.addItemDecoration(new SpaceItemDecoration());
+
+
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CartFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+
     }
     @Override
     public void onPizzaLoadSuccess(List<Pizza> pizzaList) {
@@ -161,10 +187,11 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
     }
 
     private void countCartItem() {
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         List<CartModel> cartModels = new ArrayList<>();
         FirebaseDatabase
                 .getInstance().getReference("Cart")
-                .child("UserId")
+                .child(user)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
