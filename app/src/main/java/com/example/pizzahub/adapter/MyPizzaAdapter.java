@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pizzahub.R;
-import com.example.pizzahub.eventbus.MyUpdataCartEvent;
+import com.example.pizzahub.eventbus.MyUpdateCartEvent;
 import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.listener.IRecyclerViewClickListener;
 import com.example.pizzahub.model.CartModel;
 import com.example.pizzahub.model.Pizza;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -119,7 +115,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
 
 
                         }
-                        EventBus.getDefault().postSticky(new MyUpdataCartEvent());
+                        EventBus.getDefault().postSticky(new MyUpdateCartEvent());
                     }
 
                     @Override
