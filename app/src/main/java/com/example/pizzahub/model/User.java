@@ -1,4 +1,4 @@
-package com.example.pizzahub;
+package com.example.pizzahub.model;
 
 public class User {
     String  name, email;
