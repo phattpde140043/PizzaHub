@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
         LoginButton = this.findViewById(R.id.btn_login);
         SignupButton = (TextView) findViewById(R.id.tv_login_signup);
         edtEmail = findViewById(R.id.edt_login_email);
@@ -183,7 +182,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private void signIn() {
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -200,11 +198,13 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 //                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            User u = new User(user.getEmail());
-                            database = FirebaseDatabase.getInstance();
-                            reference = database.getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            reference.setValue(u);
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                User u = new User(user.getEmail());
+                                database = FirebaseDatabase.getInstance();
+                                reference = database.getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                reference.setValue(u);
+                            }
                             LoginSuccess();
                         } else {
                             Toast.makeText(LoginActivity.this, "Failed to login! Please check your email and password", Toast.LENGTH_LONG).show();
