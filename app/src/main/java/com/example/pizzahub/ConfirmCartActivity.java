@@ -42,7 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ConfirmCartActivity extends Fragment implements ICartLoadListener {
+public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadListener {
     @BindView(R.id.recycler_confirmcart)
     RecyclerView recyclerCart;
     @BindView(R.id.mainLayout_confirmcart)
@@ -57,16 +57,15 @@ public class ConfirmCartActivity extends Fragment implements ICartLoadListener {
     View v;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        v = inflater.inflate(R.layout.confirm_cart, container, false);
+        setContentView(R.layout.confirm_cart);
 
         init();
         loadCartFromFirebase();
 
 
-        return v;
+//        return v;
 
     }
 
@@ -106,22 +105,22 @@ public class ConfirmCartActivity extends Fragment implements ICartLoadListener {
 
 
     private void init(){
-        ButterKnife.bind(this, v); // true
+        ButterKnife.bind(this); // true
 
 
         cartLoadListener = this;
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerCart.setLayoutManager(layoutManager);
-        recyclerCart.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
+        recyclerCart.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new CartFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment);
-                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -136,7 +135,7 @@ public class ConfirmCartActivity extends Fragment implements ICartLoadListener {
             sum+=cartModel.getTotalPrice();
         }
         txtTotal.setText(new StringBuilder("$").append(sum));
-        MyConfirmCartAdapter adapter = new MyConfirmCartAdapter(getContext(), cartModelList);
+        MyConfirmCartAdapter adapter = new MyConfirmCartAdapter(this, cartModelList);
         recyclerCart.setAdapter(adapter);
     }
 

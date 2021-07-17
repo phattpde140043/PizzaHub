@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaHub">
         <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ConfirmCartActivity"></activity>
         <activity android:name=".SignUpActivity" />
         <activity
             android:name=".MainActivity"
