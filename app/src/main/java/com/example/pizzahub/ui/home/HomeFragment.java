@@ -1,28 +1,23 @@
 package com.example.pizzahub.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.adapter.MyPizzaAdapter;
-import com.example.pizzahub.eventbus.MyUpdataCartEvent;
+import com.example.pizzahub.eventbus.MyUpdateCartEvent;
 import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.listener.IPizzaLoadListener;
 import com.example.pizzahub.model.CartModel;
@@ -30,15 +25,11 @@ import com.example.pizzahub.model.Pizza;
 import com.example.pizzahub.R;
 
 import com.example.pizzahub.ui.cart.CartFragment;
-import com.example.pizzahub.ui.notifications.NotificationsFragment;
 import com.example.pizzahub.utils.SpaceItemDecoration;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nex3z.notificationbadge.NotificationBadge;
@@ -78,14 +69,14 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
 
     @Override
     public void onStop() {
-        if(EventBus.getDefault().hasSubscriberForEvent(MyUpdataCartEvent.class))
-            EventBus.getDefault().removeStickyEvent(MyUpdataCartEvent.class);
+        if(EventBus.getDefault().hasSubscriberForEvent(MyUpdateCartEvent.class))
+            EventBus.getDefault().removeStickyEvent(MyUpdateCartEvent.class);
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onUpdateCart(MyUpdataCartEvent event)
+    public void onUpdateCart(MyUpdateCartEvent event)
     {
         countCartItem();
     }
@@ -138,7 +129,7 @@ public class HomeFragment extends Fragment implements IPizzaLoadListener, ICartL
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerPizza.setLayoutManager(gridLayoutManager);
-        recyclerPizza.addItemDecoration(new SpaceItemDecoration());
+        recyclerPizza.addItemDecoration(new DividerItemDecoration(getActivity(), gridLayoutManager.getOrientation()));
 
 
 
