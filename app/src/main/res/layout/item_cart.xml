@@ -16,11 +16,11 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView_cart"
             android:src="@drawable/common_google_signin_btn_icon_dark"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="150dp" />
+            android:layout_height="100dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_weight="4"
@@ -33,14 +33,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-<!--            <TextView-->
-<!--                android:id="@+id/txtName"-->
-<!--                android:text="Name"-->
-<!--                android:textSize="30sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:layout_gravicity="start"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_width="wrap_content"/>-->
+            <TextView
+                android:id="@+id/txtName_cart"
+                android:text="Name"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -55,7 +54,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/txtQuantity"
+                    android:id="@+id/txtQuantity_cart"
                     android:text="1"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
@@ -72,7 +71,7 @@
 
             </LinearLayout>
             <TextView
-                android:id="@+id/txtPrice"
+                android:id="@+id/txtPrice_cart"
                 android:text="$1"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
