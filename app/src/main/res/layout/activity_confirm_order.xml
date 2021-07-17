@@ -2,7 +2,9 @@
 <RelativeLayout android:background="#e1e1e1"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ConfirmOrderActivity">
 
 
     <TextView
@@ -107,8 +109,7 @@
         android:layout_above="@+id/layout_transportationtotal"
         android:padding="5dp"
         android:weightSum="2"
-        android:layout_marginTop="30dp"
-        >
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -184,7 +185,6 @@
         android:layout_alignParentBottom="true"
         android:layout_height="60dp"
         android:layout_width="match_parent"
-        android:onClick="insertOrder"
         android:text="Check Out"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/main_red">

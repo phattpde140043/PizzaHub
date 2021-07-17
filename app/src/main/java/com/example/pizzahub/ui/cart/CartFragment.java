@@ -1,9 +1,11 @@
 package com.example.pizzahub.ui.cart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pizzahub.ConfirmOrderActivity;
+import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.adapter.MyCartAdapter;
 import com.example.pizzahub.eventbus.MyUpdateCartEvent;
@@ -49,6 +53,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
 
     ICartLoadListener cartLoadListener;
     View v;
+    Button btnOrder;
 
     @Override
     public void onStart() {
@@ -58,29 +63,37 @@ public class CartFragment extends Fragment implements ICartLoadListener {
 
     @Override
     public void onStop() {
-        if(EventBus.getDefault().hasSubscriberForEvent(MyUpdateCartEvent.class))
+        if (EventBus.getDefault().hasSubscriberForEvent(MyUpdateCartEvent.class))
             EventBus.getDefault().removeStickyEvent(MyUpdateCartEvent.class);
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onUpdateCart(MyUpdateCartEvent event)
-    {
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onUpdateCart(MyUpdateCartEvent event) {
         loadCartFromFirebase();
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_cart, container, false);
 
         init();
         loadCartFromFirebase();
 
-
+        btnOrder = v.findViewById(R.id.btn_placeorder);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ConfirmOrderActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+//                getActivity().finish();
+            }
+        });
         return v;
     }
 
@@ -94,19 +107,15 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                        if(snapshot.exists())
-                        {
-                            for(DataSnapshot cartSnapshot:snapshot.getChildren())
-                            {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot cartSnapshot : snapshot.getChildren()) {
                                 CartModel cartModel = cartSnapshot.getValue(CartModel.class);
                                 cartModel.setKey(cartSnapshot.getKey());
                                 cartModels.add(cartModel);
                             }
                             cartLoadListener.onCartLoadSuccess(cartModels);
-                        }
-                        else {
-                            for(DataSnapshot cartSnapshot:snapshot.getChildren())
-                            {
+                        } else {
+                            for (DataSnapshot cartSnapshot : snapshot.getChildren()) {
                                 CartModel cartModel = cartSnapshot.getValue(CartModel.class);
                                 cartModel.setKey(cartSnapshot.getKey());
                                 cartModels.add(cartModel);
@@ -124,7 +133,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                 });
     }
 
-    private void init(){
+    private void init() {
         ButterKnife.bind(this, v); // true
 
 
@@ -140,9 +149,8 @@ public class CartFragment extends Fragment implements ICartLoadListener {
     @Override
     public void onCartLoadSuccess(List<CartModel> cartModelList) {
         double sum = 0;
-        for(CartModel cartModel : cartModelList)
-        {
-            sum+=cartModel.getTotalPrice();
+        for (CartModel cartModel : cartModelList) {
+            sum += cartModel.getTotalPrice();
         }
         txtTotal.setText(new StringBuilder("$").append(sum));
         MyCartAdapter adapter = new MyCartAdapter(getContext(), cartModelList);
