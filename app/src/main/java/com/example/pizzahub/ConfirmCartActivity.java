@@ -1,15 +1,16 @@
-package com.example.pizzahub.ui.cart;
+package com.example.pizzahub;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,12 +18,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pizzahub.ConfirmCartActivity;
-import com.example.pizzahub.R;
 import com.example.pizzahub.adapter.MyCartAdapter;
+import com.example.pizzahub.adapter.MyConfirmCartAdapter;
 import com.example.pizzahub.eventbus.MyUpdateCartEvent;
 import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.model.CartModel;
+import com.example.pizzahub.ui.cart.CartFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,53 +42,32 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CartFragment extends Fragment implements ICartLoadListener {
-
-    @BindView(R.id.recycler_cart)
+public class ConfirmCartActivity extends Fragment implements ICartLoadListener {
+    @BindView(R.id.recycler_confirmcart)
     RecyclerView recyclerCart;
-    @BindView(R.id.mainLayout_cart)
+    @BindView(R.id.mainLayout_confirmcart)
     RelativeLayout mainLayout;
-    @BindView(R.id.txtTotal)
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
+    @BindView(R.id.txtTotal_confirmcart)
     TextView txtTotal;
-    @BindView(R.id.btnOrder)
-    Button btnOrder;
 
 
     ICartLoadListener cartLoadListener;
     View v;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        if(EventBus.getDefault().hasSubscriberForEvent(MyUpdateCartEvent.class))
-            EventBus.getDefault().removeStickyEvent(MyUpdateCartEvent.class);
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onUpdateCart(MyUpdateCartEvent event)
-    {
-        loadCartFromFirebase();
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        v = inflater.inflate(R.layout.fragment_cart, container, false);
+        v = inflater.inflate(R.layout.confirm_cart, container, false);
 
         init();
         loadCartFromFirebase();
 
 
         return v;
+
     }
 
     private void loadCartFromFirebase() {
@@ -111,13 +91,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                             cartLoadListener.onCartLoadSuccess(cartModels);
                         }
                         else {
-                            for(DataSnapshot cartSnapshot:snapshot.getChildren())
-                            {
-                                CartModel cartModel = cartSnapshot.getValue(CartModel.class);
-                                cartModel.setKey(cartSnapshot.getKey());
-                                cartModels.add(cartModel);
-                            }
-                            cartLoadListener.onCartLoadSuccess(cartModels);
+
                             cartLoadListener.onCartLoadFailed("Cart empty");
 
                         }
@@ -130,6 +104,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                 });
     }
 
+
     private void init(){
         ButterKnife.bind(this, v); // true
 
@@ -139,10 +114,10 @@ public class CartFragment extends Fragment implements ICartLoadListener {
         recyclerCart.setLayoutManager(layoutManager);
         recyclerCart.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
 
-        btnOrder.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new ConfirmCartActivity();
+                Fragment fragment = new CartFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment);
@@ -150,8 +125,6 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                 fragmentTransaction.commit();
             }
         });
-
-
     }
 
 
@@ -163,7 +136,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
             sum+=cartModel.getTotalPrice();
         }
         txtTotal.setText(new StringBuilder("$").append(sum));
-        MyCartAdapter adapter = new MyCartAdapter(getContext(), cartModelList);
+        MyConfirmCartAdapter adapter = new MyConfirmCartAdapter(getContext(), cartModelList);
         recyclerCart.setAdapter(adapter);
     }
 
