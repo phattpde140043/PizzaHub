@@ -70,7 +70,6 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
 
     private void addToCart(Pizza pizza) {
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        System.out.println(user);
         DatabaseReference userCart = FirebaseDatabase
                 .getInstance()
                 .getReference("Cart")
