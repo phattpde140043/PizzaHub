@@ -22,17 +22,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ID_attr"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="15dp"
-        android:text="ID :"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
-
-    <TextView
         android:id="@+id/Name_attr"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -41,19 +30,7 @@
         android:paddingBottom="15dp"
         android:text="Name :"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ID_attr" />
-
-    <TextView
-        android:id="@+id/ID_field"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ID_attr"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        tools:layout_constraintStart_toEndOf="@id/textView11" />
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <TextView
         android:id="@+id/Gender_attr"
@@ -115,28 +92,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="442dp" />
+        app:layout_constraintTop_toBottomOf="@id/email_txt" />
 
     <Button
         android:id="@+id/Logout_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:text="Close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="504dp" />
+        app:layout_constraintTop_toBottomOf="@id/ChangePass_button" />
 
     <EditText
         android:id="@+id/Name_txt"
@@ -146,7 +121,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Name_attr"
-        app:layout_constraintTop_toBottomOf="@id/ID_field" />
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <EditText
         android:id="@+id/Gendertxt"
@@ -166,6 +141,7 @@
         android:ems="10"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DOP_attr"
         app:layout_constraintTop_toBottomOf="@id/Gendertxt"
         tools:layout_constraintStart_toEndOf="@id/DOP_attr" />
 
@@ -177,14 +153,14 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Address_attr"
-        tools:layout_editor_absoluteY="251dp" />
+        app:layout_constraintTop_toBottomOf="@id/DOPtxt" />
 
     <EditText
         android:id="@+id/Phone_txt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Phone_attr"
         app:layout_constraintTop_toBottomOf="@id/Address_txt"
@@ -195,7 +171,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/Phone_attr"

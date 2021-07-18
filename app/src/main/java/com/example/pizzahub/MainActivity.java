@@ -17,11 +17,15 @@ import com.example.pizzahub.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.pizzahub.databinding.ActivityMainBinding;
 
@@ -34,6 +38,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            int position = extras.getInt("Fragment_number");
+
+            if (position == 3) {
+                loadFragment(new NotificationsFragment());
+            }
+        }
         //loadFragment(new HomeFragment());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

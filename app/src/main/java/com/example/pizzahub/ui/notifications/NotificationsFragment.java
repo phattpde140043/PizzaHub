@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.R;
+import com.example.pizzahub.UpdateUserInfoActivity;
 import com.example.pizzahub.databinding.FragmentNotificationsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -46,6 +47,9 @@ public class NotificationsFragment extends Fragment {
     TextView Phone_field;
     TextView Email_field;
 
+    Button Update_button;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
@@ -67,6 +71,16 @@ public class NotificationsFragment extends Fragment {
                 Intent i2 = new Intent(getContext(), LoginActivity.class);
                 startActivity(i2);
                 getActivity().finish();
+            }
+        });
+
+        Update_button = (Button) root.findViewById(R.id.Update_button);
+        Update_button.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), UpdateUserInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
