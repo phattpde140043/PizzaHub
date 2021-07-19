@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.pizzahub.ChangePassActivity;
 import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.UpdateUserInfoActivity;
@@ -48,6 +49,9 @@ public class NotificationsFragment extends Fragment {
     TextView Email_field;
 
     Button Update_button;
+    Button ChangePass_btn;
+
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,6 +83,16 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), UpdateUserInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        ChangePass_btn= (Button) root.findViewById(R.id.ChangePass_button);
+        ChangePass_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangePassActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
