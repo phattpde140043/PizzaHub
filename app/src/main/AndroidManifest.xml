@@ -15,6 +15,7 @@
         <activity android:name=".ConfirmCartActivity"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".UpdateUserInfoActivity" />
+        <activity android:name=".ChangePassActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
