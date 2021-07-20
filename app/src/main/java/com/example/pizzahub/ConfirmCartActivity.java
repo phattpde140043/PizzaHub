@@ -1,7 +1,14 @@
 package com.example.pizzahub;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,6 +35,8 @@ import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.model.CartModel;
 import com.example.pizzahub.model.Order;
 import com.example.pizzahub.ui.cart.CartFragment;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,8 +53,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,11 +75,14 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
     ICartLoadListener cartLoadListener;
     View v;
     Button btnCheckOut;
-    TextInputLayout edtName,edtPhone,edtAddress;
+    TextInputLayout edtName, edtPhone, edtAddress;
     TextView tvTotal;
 
     private FirebaseDatabase database;
     private DatabaseReference reference;
+
+    ImageView imgLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +90,10 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
         setContentView(R.layout.activity_confirm_order);
 
         btnCheckOut = findViewById(R.id.btn_check_out);
-        edtName=findViewById(R.id.confirm_name);
-        edtPhone=findViewById(R.id.confirm_phone);
-        edtAddress=findViewById(R.id.confirm_address);
-        tvTotal=findViewById(R.id.txtTotal_confirmcart);
+        edtName = findViewById(R.id.confirm_name);
+        edtPhone = findViewById(R.id.confirm_phone);
+        edtAddress = findViewById(R.id.confirm_address);
+        tvTotal = findViewById(R.id.txtTotal_confirmcart);
 
         init();
         loadCartFromFirebase();
@@ -89,16 +104,16 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
                 if (!validateField(edtName) | !validateField(edtPhone) | !validateField(edtAddress)) {
                     return;
                 } else {
-                    String userid, name, phone, address, total,status;
+                    String userid, name, phone, address, total, status;
 
                     userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     name = edtName.getEditText().getText().toString().trim();
                     phone = edtPhone.getEditText().getText().toString().trim();
                     address = edtAddress.getEditText().getText().toString().trim();
                     total = tvTotal.getText().toString().trim();
-                    status="Be Prepared";
+                    status = "Be Prepared";
 
-                    Order o = new Order(userid, name, phone, address, total,status);
+                    Order o = new Order(userid, name, phone, address, total, status);
 
                     database = FirebaseDatabase.getInstance();
                     String key = database.getReference("Order Detail").push().getKey();
@@ -110,8 +125,45 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
                 }
             }
         });
+        imgLocation = findViewById(R.id.ivLocation);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        imgLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    getLocation();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                }
+            }
+        });
     }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(ConfirmCartActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        try {
+                            Geocoder geocoder = new Geocoder(ConfirmCartActivity.this, Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(
+                                    location.getLatitude(), location.getLongitude(), 1);
+                            edtAddress.getEditText().setText(addresses.get(0).getAddressLine(0));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(ConfirmCartActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+
 
     private void loadCartFromFirebase() {
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -208,7 +260,8 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
         fromPath.addListenerForSingleValueEvent(valueEventListener);
     }
