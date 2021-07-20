@@ -40,7 +40,7 @@ public class NotificationsFragment extends Fragment {
     Button logout;
     DatabaseReference mData;
 
-    TextView ID_field;
+
     TextView Name_field;
     TextView Gender_field;
     TextView DOB_field;
@@ -98,7 +98,7 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
-        ID_field = (TextView) root.findViewById(R.id.ID_field);
+
         Name_field= (TextView) root.findViewById(R.id.name_field);
         Gender_field = (TextView) root.findViewById(R.id.gender_field);
         DOB_field = (TextView) root.findViewById(R.id.DOB_field);
@@ -111,7 +111,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 String ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                ID_field.setText(ID);
+
 
                 if(snapshot.child(ID).child("name").getValue()==null){
                     mData.child("User").child(ID).child("name").setValue("");
