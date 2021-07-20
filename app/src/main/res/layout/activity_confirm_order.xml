@@ -22,8 +22,8 @@
         android:layout_below="@id/btnBack"
         android:layout_marginLeft="10dp"
         android:text="Information"
-        android:textStyle="bold"
-        android:textSize="20dp"></TextView>
+        android:textSize="20dp"
+        android:textStyle="bold"></TextView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/layout_info"
@@ -55,8 +55,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
-                        android:background="#FFF"/>
+                        android:background="#FFF"
+                        android:hint="Name" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -73,27 +73,37 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone"
-                        android:background="#FFF"/>
+                        android:background="#FFF"
+                        android:hint="Phone" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/confirm_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.97">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Address"
-                        android:background="#FFF"/>
+                        android:background="#FFF"
+                        android:hint="Address" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ivLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:src="@drawable/ic_baseline_my_location_24"></ImageView>
             </LinearLayout>
 
         </LinearLayout>
