@@ -12,15 +12,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.pizzahub.adapter.ViewPagerAdapter;
 import com.example.pizzahub.ui.home.HomeFragment;
 import com.example.pizzahub.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,53 +35,76 @@ import com.example.pizzahub.databinding.ActivityMainBinding;
 import java.util.Calendar;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-    ViewPager mViewPager;
+
+    private BottomNavigationView mNavigationView;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null) {
-            int position = extras.getInt("Fragment_number");
+        mNavigationView = findViewById(R.id.nav_view);
+        mViewPager = findViewById(R.id.view_pager);
 
-            if (position == 3) {
-                loadFragment(new NotificationsFragment());
+        setUpViewPager();
+
+        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.action_home:
+                        mViewPager.setCurrentItem(0);
+                        break;
+                    case R.id.action_cart:
+                        mViewPager.setCurrentItem(1);
+                        break;
+                    case R.id.action_notifications:
+                        mViewPager.setCurrentItem(2);
+                        break;
+                }
+                return true;
             }
-        }
-        //loadFragment(new HomeFragment());
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-
+        });
     }
 
-    private boolean loadFragment(Fragment fragment) {
-        //switching fragment
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment_activity_main, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
+    private void setUpViewPager(){
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mViewPager.setAdapter(viewPagerAdapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        mNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
+                        break;
+                    case 1:
+                        mNavigationView.getMenu().findItem(R.id.action_cart).setChecked(true);
+                        break;
+                    case 2:
+                        mNavigationView.getMenu().findItem(R.id.action_notifications).setChecked(true);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
-
-
 }
