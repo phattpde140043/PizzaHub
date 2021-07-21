@@ -127,6 +127,31 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
         });
         imgLocation = findViewById(R.id.ivLocation);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("User").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                String ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if(snapshot.child(ID).child("name").getValue()==null){
+                    reference.child("User").child(ID).child("name").setValue("");
+                    edtName.getEditText().setText("");
+                }else{
+                    edtName.getEditText().setText(snapshot.child(ID).child("name").getValue().toString());
+                }
+                if(snapshot.child(ID).child("Phone").getValue()==null){
+                    reference.child("User").child(ID).child("Phone").setValue("");
+                    edtPhone.getEditText().setText("");
+                }else{
+                    edtPhone.getEditText().setText(snapshot.child(ID).child("Phone").getValue().toString());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
 
         imgLocation.setOnClickListener(new View.OnClickListener() {
             @Override
