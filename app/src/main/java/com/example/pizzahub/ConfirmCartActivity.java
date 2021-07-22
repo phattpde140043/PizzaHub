@@ -46,6 +46,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -54,7 +55,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -104,7 +107,7 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
                 if (!validateField(edtName) | !validateField(edtPhone) | !validateField(edtAddress)) {
                     return;
                 } else {
-                    String userid, name, phone, address, total, status;
+                    String userid, name, phone, address, total, status,orderTime;
 
                     userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     name = edtName.getEditText().getText().toString().trim();
@@ -113,7 +116,11 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
                     total = tvTotal.getText().toString().trim();
                     status = "Be Prepared";
 
-                    Order o = new Order(userid, name, phone, address, total, status);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = new Date();
+                    orderTime= formatter.format(date);
+
+                    Order o = new Order(userid, name, phone, address, total, status,orderTime);
 
                     database = FirebaseDatabase.getInstance();
                     String key = database.getReference("Order Detail").push().getKey();
