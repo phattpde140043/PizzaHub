@@ -3,7 +3,7 @@ package com.example.pizzahub.model;
 import java.util.ArrayList;
 
 public class Order {
-    private String userid, name, phone, address, total, status;
+    private String userid, name, phone, address, total, status, orderTime;
     ArrayList<Pizza> lsPizza;
 
     public Order() {
@@ -57,13 +57,22 @@ public class Order {
         this.lsPizza = lsPizza;
     }
 
-    public Order(String userid, String name, String phone, String address, String total, String status) {
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
+    }
+
+    public Order(String userid, String name, String phone, String address, String total, String status, String orderTime) {
         this.userid = userid;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.total = total;
         this.status = status;
+        this.orderTime = orderTime;
     }
 
     public String getUserid() {
