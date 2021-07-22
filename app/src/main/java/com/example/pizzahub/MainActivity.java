@@ -43,8 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            int position = extras.getInt("Fragment_number");
 
-        loadFragment(new HomeFragment());
+            if (position == 3) {
+                loadFragment(new NotificationsFragment());
+            }
+        }
+
+        //loadFragment(new HomeFragment());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 
 
 }
