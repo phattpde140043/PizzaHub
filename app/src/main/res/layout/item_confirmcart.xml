@@ -22,7 +22,7 @@
 
             <ImageView
                 android:id="@+id/imageView_confirmcart"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="85dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_minus"

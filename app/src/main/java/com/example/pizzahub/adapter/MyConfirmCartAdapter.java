@@ -48,7 +48,7 @@ public class MyConfirmCartAdapter extends RecyclerView.Adapter<MyConfirmCartAdap
                 .into(holder.imageView);
         holder.txtPrice.setText(new StringBuilder("$").append(cartModelList.get(position).getPrice()));
         holder.txtName.setText(new StringBuilder().append(cartModelList.get(position).getName()));
-        holder.txtQuantity.setText(new StringBuilder().append(cartModelList.get(position).getQuantity()));
+        holder.txtQuantity.setText(new StringBuilder("x").append(cartModelList.get(position).getQuantity()));
     }
 
     @Override

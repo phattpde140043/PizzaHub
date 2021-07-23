@@ -53,9 +53,10 @@
 
     <Button
         android:id="@+id/btnOrder"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:backgroundTint="@color/main_red"
         android:onClick="insertOrder"

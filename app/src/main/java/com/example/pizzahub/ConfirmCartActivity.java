@@ -132,8 +132,7 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
                 }
             }
         });
-        imgLocation = findViewById(R.id.ivLocation);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("User").addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,6 +159,8 @@ public class ConfirmCartActivity extends AppCompatActivity implements ICartLoadL
             }
         });
 
+        imgLocation = findViewById(R.id.ivLocation);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         imgLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
