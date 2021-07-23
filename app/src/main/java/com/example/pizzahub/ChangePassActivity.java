@@ -89,6 +89,7 @@ public class ChangePassActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d("Change Password", "Password updated");
+                                                Toast.makeText(getBaseContext(), "Change password success!", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 intent.putExtra("Fragment_number", 3);
@@ -96,6 +97,7 @@ public class ChangePassActivity extends AppCompatActivity {
                                                 finish();
                                             } else {
                                                 Log.e("Change Password", "Error password not updated");
+                                                Toast.makeText(getBaseContext(), "Change password failed!", Toast.LENGTH_LONG).show();
                                                 NewPass_txt.setText("");
                                                 CurrPass_txt.setText("");
                                                 CfrNewPass_txt.setText("");
