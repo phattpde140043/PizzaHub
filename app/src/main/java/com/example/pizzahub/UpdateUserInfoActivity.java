@@ -93,11 +93,11 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         Save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Name_txt.getText()!=null&&Gender_txt.getText()!=null&&DOB_txt.getText()!=null&&
-                        Address_txt.getText()!=null&&Phone_txt.getText()!=null&&Email_txt.getText()!=null&&
-                        (!Name_txt.getText().toString().isEmpty())&&(!Gender_txt.getText().toString().isEmpty())&&
-                        (!DOB_txt.getText().toString().isEmpty())&&(!Address_txt.getText().toString().isEmpty())&&
-                        (!Phone_txt.getText().toString().isEmpty())&&(!Email_txt.getText().toString().isEmpty())) {
+                if (Name_txt.getText() != null && Gender_txt.getText() != null && DOB_txt.getText() != null &&
+                        Address_txt.getText() != null && Phone_txt.getText() != null && Email_txt.getText() != null &&
+                        (!Name_txt.getText().toString().isEmpty()) && (!Gender_txt.getText().toString().isEmpty()) &&
+                        (!DOB_txt.getText().toString().isEmpty()) && (!Address_txt.getText().toString().isEmpty()) &&
+                        (!Phone_txt.getText().toString().isEmpty()) && (!Email_txt.getText().toString().isEmpty())) {
                     String ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     mData.child("User").child(ID).child("name").setValue(Name_txt.getText().toString());
                     mData.child("User").child(ID).child("Gender").setValue(Gender_txt.getText().toString());
@@ -105,11 +105,15 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
                     mData.child("User").child(ID).child("Address").setValue(Address_txt.getText().toString());
                     mData.child("User").child(ID).child("Phone").setValue(Phone_txt.getText().toString());
                     mData.child("User").child(ID).child("Email").setValue(Email_txt.getText().toString());
+                    Toast.makeText(getBaseContext(), "Update information success!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("Fragment_number", 3);
                     startActivity(intent);
                     finish();
+
+                } else {
+                    Toast.makeText(getBaseContext(), "Update information failed!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -145,7 +149,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
                 if(!hasFocus){
                     if(!validateDate(DOB_txt.getText().toString())){
                         DOB_txt.setText("");
-                        Toast.makeText(getBaseContext(),"Plese type dd/mm/yyyy",Toast.LENGTH_SHORT);
+                        Toast.makeText(getBaseContext(),"Plese type dd/mm/yyyy",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
