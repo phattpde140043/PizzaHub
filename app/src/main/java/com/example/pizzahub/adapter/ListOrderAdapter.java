@@ -2,6 +2,7 @@ package com.example.pizzahub.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pizzahub.DetailOrderActivity;
+import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.eventbus.MyUpdateCartEvent;
 import com.example.pizzahub.model.CartModel;
@@ -37,6 +40,7 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.MyCa
     public ListOrderAdapter(Context context, List<Order> cartModelList) {
         this.context = context;
         this.OrderList = cartModelList;
+
     }
 
     @NonNull
@@ -58,9 +62,40 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.MyCa
         holder.txtPrice.setText(new StringBuilder("").append(OrderList.get(position).getTotal()));
         holder.txtName.setText(new StringBuilder().append(Name_Order));
         holder.txtQuantity.setText(new StringBuilder().append(OrderList.get(position).getStatus()));
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickEvent(OrderList.get(position).getKey());
+            }
+        });
+        holder.txtName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickEvent(OrderList.get(position).getKey());
+            }
+        });
+        holder.txtPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickEvent(OrderList.get(position).getKey());
+            }
+        });
+        holder.txtQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickEvent(OrderList.get(position).getKey());
+            }
+        });
+
     }
 
-
+    private void OnClickEvent(String key){
+        Intent intent = new Intent(context, DetailOrderActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("Order_key",key);
+        context.startActivity(intent);
+        //context.finish();
+    }
 
     @Override
     public int getItemCount() {
@@ -86,4 +121,6 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.MyCa
             unbinder = ButterKnife.bind(this, itemView);
         }
     }
+
+
 }
