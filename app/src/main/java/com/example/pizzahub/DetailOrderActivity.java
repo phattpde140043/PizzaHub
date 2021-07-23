@@ -89,7 +89,7 @@ public class DetailOrderActivity extends AppCompatActivity {
                     CartModel cartModel = new CartModel();
                     cartModel.setImage(cartSnapshot.child("image").getValue().toString());
                     cartModel.setName(cartSnapshot.child("name").getValue().toString());
-                    cartModel.setPrice(cartSnapshot.child("price").getValue().toString());
+//                    cartModel.setPrice(cartSnapshot.child("price").getValue().toString());
                     cartModel.setQuantity(Integer.parseInt(cartSnapshot.child("quantity").getValue().toString()));
                     cartModel.setTotalPrice(Integer.parseInt(cartSnapshot.child("totalPrice").getValue().toString()));
                     cartModel.setKey(cartSnapshot.getKey());
