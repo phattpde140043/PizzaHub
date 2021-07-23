@@ -50,11 +50,12 @@ public class ChangePassActivity extends AppCompatActivity {
         Close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                /*Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("Fragment_number",3);
                 startActivity(intent);
-                finish();
+                finish();*/
+                onBackPressed();
             }
         });
 
@@ -90,11 +91,12 @@ public class ChangePassActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 Log.d("Change Password", "Password updated");
                                                 Toast.makeText(getBaseContext(), "Change password success!", Toast.LENGTH_LONG).show();
-                                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                                /*Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 intent.putExtra("Fragment_number", 3);
                                                 startActivity(intent);
-                                                finish();
+                                                finish();*/
+                                                onBackPressed();
                                             } else {
                                                 Log.e("Change Password", "Error password not updated");
                                                 Toast.makeText(getBaseContext(), "Change password failed!", Toast.LENGTH_LONG).show();
@@ -122,5 +124,10 @@ public class ChangePassActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

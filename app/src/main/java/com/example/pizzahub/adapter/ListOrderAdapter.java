@@ -91,7 +91,7 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.MyCa
 
     private void OnClickEvent(String key){
         Intent intent = new Intent(context, DetailOrderActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("Order_key",key);
         context.startActivity(intent);
         //context.finish();
