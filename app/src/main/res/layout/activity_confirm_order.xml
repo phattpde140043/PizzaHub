@@ -149,10 +149,10 @@
 
     <Button
         android:id="@+id/btn_check_out"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:backgroundTint="@color/main_red"
         android:onClick="insertOrder"
         android:text="Check Out"
