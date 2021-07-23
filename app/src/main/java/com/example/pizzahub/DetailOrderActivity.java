@@ -89,7 +89,7 @@ public class DetailOrderActivity extends AppCompatActivity {
                     CartModel cartModel = new CartModel();
                     cartModel.setImage(cartSnapshot.child("image").getValue().toString());
                     cartModel.setName(cartSnapshot.child("name").getValue().toString());
-//                    cartModel.setPrice(cartSnapshot.child("price").getValue().toString());
+                    cartModel.setPrice(Integer.parseInt(cartSnapshot.child("price").getValue().toString()));
                     cartModel.setQuantity(Integer.parseInt(cartSnapshot.child("quantity").getValue().toString()));
                     cartModel.setTotalPrice(Integer.parseInt(cartSnapshot.child("totalPrice").getValue().toString()));
                     cartModel.setKey(cartSnapshot.getKey());
@@ -130,13 +130,17 @@ public class DetailOrderActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ViewListOrderActivity.class);
+                /*Intent intent = new Intent(getBaseContext(), ViewListOrderActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
+                finish();*/
+                onBackPressed();
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 }

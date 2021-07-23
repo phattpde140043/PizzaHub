@@ -106,11 +106,12 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
                     mData.child("User").child(ID).child("Phone").setValue(Phone_txt.getText().toString());
                     mData.child("User").child(ID).child("Email").setValue(Email_txt.getText().toString());
                     Toast.makeText(getBaseContext(), "Update information success!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    /*Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("Fragment_number", 3);
                     startActivity(intent);
-                    finish();
+                    finish();*/
+                    onBackPressed();
 
                 } else {
                     Toast.makeText(getBaseContext(), "Update information failed!", Toast.LENGTH_LONG).show();
@@ -122,11 +123,12 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         Close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                /*Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("Fragment_number",3);
                 startActivity(intent);
-                finish();
+                finish();*/
+                onBackPressed();
             }
         });
 
@@ -183,5 +185,10 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         matcher = pattern.matcher(DOB);
 
         return matcher.matches();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
