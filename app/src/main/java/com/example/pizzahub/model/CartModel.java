@@ -1,7 +1,8 @@
 package com.example.pizzahub.model;
 
 public class CartModel {
-    private String key, name, image, price;
+    private String key, name, image;
+    private int price;
     private int quantity;
     private float totalPrice;
 
@@ -33,11 +34,11 @@ public class CartModel {
         this.image = image;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

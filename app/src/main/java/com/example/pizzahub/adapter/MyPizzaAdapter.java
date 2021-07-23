@@ -139,7 +139,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                             cartModel.setQuantity(cartModel.getQuantity() + quantity);
                             Map<String, Object> updateData = new HashMap<>();
                             updateData.put("quantity", cartModel.getQuantity());
-                            updateData.put("totalPrice", cartModel.getQuantity() * Float.parseFloat(cartModel.getPrice()));
+                            updateData.put("totalPrice", cartModel.getQuantity() * cartModel.getPrice());
 
                             userCart.child(pizza.getKey())
                                     .updateChildren(updateData)
@@ -155,7 +155,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                             cartModel.setName(pizza.getName());
                             cartModel.setImage(pizza.getImage());
                             cartModel.setKey(pizza.getKey());
-                            cartModel.setPrice(pizza.getPrice().toString());
+                            cartModel.setPrice(pizza.getPrice());
                             cartModel.setQuantity(quantity);
                             cartModel.setTotalPrice(Float.parseFloat(pizza.getPrice().toString()));
 
