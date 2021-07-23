@@ -51,7 +51,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtPrice_cart"
+                    android:id="@+id/txtPrice_listOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -69,7 +69,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtQuantity_cart"
+                        android:id="@+id/txtQuantity_listOrder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"

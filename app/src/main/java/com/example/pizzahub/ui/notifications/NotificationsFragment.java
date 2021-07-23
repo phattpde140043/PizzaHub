@@ -21,6 +21,7 @@ import com.example.pizzahub.ChangePassActivity;
 import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.UpdateUserInfoActivity;
+import com.example.pizzahub.ViewListOrderActivity;
 import com.example.pizzahub.databinding.FragmentNotificationsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -100,7 +101,9 @@ public class NotificationsFragment extends Fragment {
         ViewListOrder_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(),ViewListOrderActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 

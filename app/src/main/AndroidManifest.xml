@@ -17,6 +17,7 @@
         <activity android:name=".ConfirmCartActivity"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".UpdateUserInfoActivity" />
+        <activity android:name=".ViewListOrderActivity" />
         <activity android:name=".ChangePassActivity" />
         <activity
             android:name=".MainActivity"
