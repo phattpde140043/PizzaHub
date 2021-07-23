@@ -107,7 +107,6 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="0 Rs"
-            android:textColor="@color/black"
             android:textSize="21sp"
             android:textStyle="bold"></TextView>
 
