@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzahub.ConfirmCartActivity;
+import com.example.pizzahub.LoginActivity;
 import com.example.pizzahub.MainActivity;
 import com.example.pizzahub.R;
 import com.example.pizzahub.adapter.MyCartAdapter;
@@ -114,6 +116,7 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                                 cartModels.add(cartModel);
                             }
                             cartLoadListener.onCartLoadSuccess(cartModels);
+                            btnOrder.setVisibility(View.VISIBLE);
                         } else {
                             for (DataSnapshot cartSnapshot : snapshot.getChildren()) {
                                 CartModel cartModel = cartSnapshot.getValue(CartModel.class);
@@ -121,8 +124,9 @@ public class CartFragment extends Fragment implements ICartLoadListener {
                                 cartModels.add(cartModel);
                             }
                             cartLoadListener.onCartLoadSuccess(cartModels);
-                            cartLoadListener.onCartLoadFailed("Cart empty");
-
+                            Toast.makeText(getContext(), "Cart empty", Toast.LENGTH_LONG).show();
+//                            cartLoadListener.onCartLoadFailed("Cart empty");
+                            btnOrder.setVisibility(View.INVISIBLE);
                         }
                     }
 
