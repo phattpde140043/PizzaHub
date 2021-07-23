@@ -27,7 +27,7 @@
         android:textStyle="bold"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_confirmcart"
+        android:id="@+id/recycler_listOrder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/listOrder_info"
