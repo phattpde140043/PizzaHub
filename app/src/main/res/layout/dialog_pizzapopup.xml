@@ -67,7 +67,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="8dp"
         android:gravity="center">
 
@@ -115,7 +115,8 @@
             android:layout_toRightOf="@id/amount"
             android:background="@drawable/radius_button"
             android:text="Add to cart"
-            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:textSize="12dp"
             app:backgroundTint="@null" />
     </LinearLayout>
 </LinearLayout>

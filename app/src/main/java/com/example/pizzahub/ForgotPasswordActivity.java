@@ -70,7 +70,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else{
-                    Toast.makeText(ForgotPasswordActivity.this, "Reset password failed!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+//                    Toast.makeText(ForgotPasswordActivity.this, "Reset password failed!", Toast.LENGTH_LONG).show();
                 }
             }
         });

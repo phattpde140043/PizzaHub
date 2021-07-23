@@ -5,8 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,11 +70,13 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
         holder.txtName.setText(new StringBuilder().append(pizzaList.get(position).getName()));
 
         holder.btnAddToCart.setOnClickListener(v -> {
-            addToCart(pizzaList.get(position));
+            addToCart(pizzaList.get(position), 1);
         });
+
         Pizza pizza = pizzaList.get(position);
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_pizzapopup);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,17 +84,45 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                 TextView price = (TextView) dialog.findViewById(R.id.popupPrice);
                 ImageView image = (ImageView) dialog.findViewById(R.id.popupImage);
                 TextView size = (TextView) dialog.findViewById(R.id.popupSize);
+                Button btnAdd = (Button) dialog.findViewById(R.id.btnAddToCart);
+                TextView txtQuantity = (TextView) dialog.findViewById(R.id.txtQuantity);
+                ImageView btnPlus = dialog.findViewById(R.id.btnPlus);
+                ImageView btnMinus = dialog.findViewById(R.id.btnMinus);
+
                 name.setText(pizza.getName());
                 price.setText("$" + pizza.getPrice().toString());
                 size.setText("Size " + pizza.getSize());
                 Glide.with(context).load(pizza.getImage()).apply(new RequestOptions().override(450, 300))
                         .into(image);
                 dialog.show();
+
+                btnPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = Integer.parseInt(txtQuantity.getText().toString());
+                        txtQuantity.setText(String.valueOf(i + 1));
+                    }
+                });
+                btnMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = Integer.parseInt(txtQuantity.getText().toString());
+                        if (i > 1)
+                            txtQuantity.setText(String.valueOf(i - 1));
+                    }
+                });
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addToCart(pizzaList.get(position), Integer.parseInt(txtQuantity.getText().toString()));
+                        dialog.hide();
+                    }
+                });
             }
         });
     }
 
-    private void addToCart(Pizza pizza) {
+    private void addToCart(Pizza pizza, int quantity) {
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userCart = FirebaseDatabase
                 .getInstance()
@@ -104,7 +136,7 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                         {
                             // Just update quantity and totalPrice
                             CartModel cartModel = snapshot.getValue(CartModel.class);
-                            cartModel.setQuantity(cartModel.getQuantity() + 1);
+                            cartModel.setQuantity(cartModel.getQuantity() + quantity);
                             Map<String, Object> updateData = new HashMap<>();
                             updateData.put("quantity", cartModel.getQuantity());
                             updateData.put("totalPrice", cartModel.getQuantity() * Float.parseFloat(cartModel.getPrice()));
@@ -112,7 +144,8 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                             userCart.child(pizza.getKey())
                                     .updateChildren(updateData)
                                     .addOnSuccessListener(aVoid -> {
-                                        iCartLoadListener.onCartLoadFailed("Add To Cart Success");
+                                        Toast.makeText(dialog.getContext(), "Add To Cart Success", Toast.LENGTH_LONG).show();
+//                                        iCartLoadListener.onCartLoadFailed("Add To Cart Success");
                                     })
                                     .addOnFailureListener(e -> iCartLoadListener.onCartLoadFailed(e.getMessage()));
 
@@ -123,13 +156,14 @@ public class MyPizzaAdapter extends RecyclerView.Adapter<MyPizzaAdapter.MyPizzaV
                             cartModel.setImage(pizza.getImage());
                             cartModel.setKey(pizza.getKey());
                             cartModel.setPrice(pizza.getPrice().toString());
-                            cartModel.setQuantity(1);
+                            cartModel.setQuantity(quantity);
                             cartModel.setTotalPrice(Float.parseFloat(pizza.getPrice().toString()));
 
                             userCart.child(pizza.getKey())
                                     .setValue(cartModel)
                                     .addOnSuccessListener(aVoid -> {
-                                        iCartLoadListener.onCartLoadFailed("Add To Cart Success");
+                                        Toast.makeText(dialog.getContext(), "Add To Cart Success", Toast.LENGTH_LONG).show();
+//                                        iCartLoadListener.onCartLoadFailed("Add To Cart Success");
                                     })
                                     .addOnFailureListener(e -> iCartLoadListener.onCartLoadFailed(e.getMessage()));
 

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Cart"
+        android:textColor="@color/main_red"
         android:textAlignment="center"
         android:textSize="20dp"></TextView>
 
@@ -61,6 +62,7 @@
         android:backgroundTint="@color/main_red"
         android:onClick="insertOrder"
         android:text="Place Order"
+        android:visibility="visible"
         android:textColor="@android:color/white"></Button>
 
 
