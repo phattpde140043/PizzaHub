@@ -3,10 +3,18 @@ package com.example.pizzahub.model;
 import java.util.ArrayList;
 
 public class Order {
-    private String userid, name, phone, address, total, status, orderTime;
+    private String key,userid, name, phone, address, total, status, orderTime;
     ArrayList<Pizza> lsPizza;
 
     public Order() {
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {

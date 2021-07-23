@@ -28,8 +28,6 @@ import com.example.pizzahub.listener.ICartLoadListener;
 import com.example.pizzahub.model.CartModel;
 import com.example.pizzahub.model.Order;
 import com.example.pizzahub.model.Pizza;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -90,6 +88,7 @@ public class ViewListOrderActivity extends AppCompatActivity {
                     for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
                         if(orderSnapshot.child("userid").getValue().toString().equals(user)){
                             Order order = orderSnapshot.getValue(Order.class);
+                            order.setKey(orderSnapshot.getKey());
                             order.setLsPizza(new ArrayList<Pizza>());
                             for(DataSnapshot pizza : orderSnapshot.child("Pizza").getChildren()){
                                 Pizza p = pizza.getValue(Pizza.class);
