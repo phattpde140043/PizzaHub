@@ -99,7 +99,7 @@ public class ChangePassActivity extends AppCompatActivity {
                                                 onBackPressed();
                                             } else {
                                                 Log.e("Change Password", "Error password not updated");
-                                                Toast.makeText(getBaseContext(), "Change password failed!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getBaseContext(), "Change password failed!"+task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                 NewPass_txt.setText("");
                                                 CurrPass_txt.setText("");
                                                 CfrNewPass_txt.setText("");
@@ -108,6 +108,7 @@ public class ChangePassActivity extends AppCompatActivity {
                                     });
                                 } else {
                                     Log.e("Change Password", "Error auth failed");
+                                    Toast.makeText(getBaseContext(), "Change password failed!"+task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     NewPass_txt.setText("");
                                     CurrPass_txt.setText("");
                                     CfrNewPass_txt.setText("");
@@ -115,6 +116,7 @@ public class ChangePassActivity extends AppCompatActivity {
                             }
                         });
                     }else{
+                        Toast.makeText(getBaseContext(), "Change password failed! Confirm Password doesn't match!", Toast.LENGTH_LONG).show();
                         NewPass_txt.setText("");
                         CurrPass_txt.setText("");
                         CfrNewPass_txt.setText("");
